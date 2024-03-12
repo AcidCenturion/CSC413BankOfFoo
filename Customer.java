@@ -31,6 +31,10 @@ public class Customer implements CustomerInterface{
     public int getId(){
         return id;
     }
+    public LinkedPriorityQueue getAccounts(){
+        return accounts;
+    }
+
     public void setName(String newName){
         name = newName;
     }
@@ -47,21 +51,22 @@ public class Customer implements CustomerInterface{
     // OTHER METHODS
     public void createAccount(String newAccountName){
         Account temp = new Account(newAccountName, this);
-        accounts.add(temp);
+        //accounts.add(temp);    constructor does this now
     }
 
-    public void closeAccount(String accountName){
-        accounts.remove(accountName);
+    public void closeAccount(Account account){
+        accounts.remove(account);
     }
 
+    /*
     public Account getAccountNamed(String accountName){
-        LinkedPriorityQueue tempCopy = accounts;
-        //get and remove the top node, repeating until what we got has the account name
-        Account curr = (Account)tempCopy.remove();
-        while(curr.getAccountName() != accountName){
-            curr = (Account)tempCopy.remove();
-        }
+        Account curr = (Account)accounts.getEntryOf(accountName);
         return curr;
+    }
+     */
+
+    public void viewAccounts(){
+        accounts.view();
     }
 
     public String toString(){

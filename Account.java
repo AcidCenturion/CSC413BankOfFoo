@@ -8,7 +8,9 @@ public class Account implements AccountInterface, Comparable<Account>{
     private LinkedPriorityQueue history = new LinkedPriorityQueue();
 
     // CONSTRUCTORS
-    public Account(){}
+    public Account(){
+        dateOfCreation = LocalDate.now();
+    }
     /**
      * Create an account. The account holder should be the user of the function. Local date should be determined
      * during creation. Balance and history should start with nothing.
@@ -16,11 +18,14 @@ public class Account implements AccountInterface, Comparable<Account>{
     public Account(String newAccountName, Customer user){
         accountName = newAccountName;
         accountHolder = user;
-        //assign the current date
-        dateOfCreation = LocalDate.now();
         //an empty account has a balance of 0
         balance = 0;
+        //assign the current date
+        dateOfCreation = LocalDate.now();
         //a new account has no transaction history
+
+        //connect account to the user
+        accountHolder.getAccounts().add(this);
     }
 
     // GETTERS AND SETTERS
@@ -43,7 +48,11 @@ public class Account implements AccountInterface, Comparable<Account>{
         accountName = newName;
     }
     public void setAccountHolder(Customer newAccountHolder){
+        //remove from the old holder
+        accountHolder.closeAccount(this);
+        //set connection to the new holder
         accountHolder = newAccountHolder;
+        newAccountHolder.getAccounts().add(this);
     }
     public void setBalance(double newBalance){
         balance = newBalance;
@@ -82,5 +91,17 @@ public class Account implements AccountInterface, Comparable<Account>{
     public void makeTransaction(Transaction newTransaction){
         //add the transaction to the history of transactions
         history.add(newTransaction);
+    }
+
+    public void viewTransactions(){
+        history.view();
+    }
+
+    public String toString(){
+        String temp = "Account: " + accountName +
+                ", Holder: " + accountHolder.getName() +
+                ", Balance: " + balance +
+                ", Date: " + dateOfCreation;
+        return temp;
     }
 }

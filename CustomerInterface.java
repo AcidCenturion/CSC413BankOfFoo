@@ -13,13 +13,13 @@ public interface CustomerInterface {
     public void createAccount(String newAccountName);
 
     /**
-     * By providing the name of an Account, attempt to remove an Account of the same name under the Customer's
+     * By providing an Account, attempt to remove an Account of the same name under the Customer's
      * list of Accounts.
      */
-    public void closeAccount(String accountName);
+    public void closeAccount(Account accountName);
 
     /**
      * Get the Account object from the linked list using the name of the Account as a String param
      */
-    public Account getAccountNamed(String accountName);
+    //public Account getAccountNamed(String accountName);
 }

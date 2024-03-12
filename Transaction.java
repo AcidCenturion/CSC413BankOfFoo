@@ -102,4 +102,8 @@ public class Transaction implements TransactionInterface, Comparable<Transaction
 
         completion = true;
     }
+
+    public String toString(){
+        return type+" - "+description;
+    }
 }

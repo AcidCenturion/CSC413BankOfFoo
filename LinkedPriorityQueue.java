@@ -28,12 +28,12 @@ public class LinkedPriorityQueue<T extends Comparable<? super T>> implements Pri
             lastNode = newNode;
         }
         //if the new node is the greatest
-        else if(newEntry.compareTo(lastNode.getData()) > 0){
+        else if(newEntry.compareTo(lastNode.getData()) < 0){
             lastNode.setNextNode(newNode);
             lastNode = newNode;
         }
         //if the new node is the least
-        else if(newEntry.compareTo(firstNode.getData()) <= 0){
+        else if(newEntry.compareTo(firstNode.getData()) >= 0){
             newNode.setNextNode(firstNode);
             firstNode = newNode;
         }
@@ -93,29 +93,53 @@ public class LinkedPriorityQueue<T extends Comparable<? super T>> implements Pri
 
     /* Other Methods */
     public void view(){
-        Node currentNode = firstNode;
-        while(!(currentNode.equals(lastNode))){
-            System.out.println(currentNode.getData());
-            currentNode = currentNode.getNextNode();
+        if(isEmpty()){
+            System.out.println("Linked List is empty.");
         }
-        System.out.println(lastNode.getData());
+        else {
+            Node currentNode = firstNode;
+            while (!(currentNode.equals(lastNode))) {
+                System.out.println(currentNode.getData());
+                currentNode = currentNode.getNextNode();
+            }
+            System.out.println(lastNode.getData());
+        }
     }
 
     public void remove(T anEntry){
         if(isEmpty()){
             throw new IllegalStateException("Tried to remove from empty list");
         }
-        Node curr = firstNode;
-        //until the end of the linked list
-        while(!curr.getNextNode().equals(lastNode)){
-            if(curr.getNextNode().getData().equals(anEntry)){
-                curr.setNextNode(curr.getNextNode().getNextNode());
+        //edge cases
+        if(firstNode.equals(lastNode) && firstNode.getData().equals(anEntry)){ //theres only one node
+            firstNode = null;
+            lastNode = null;
+            numOfEntries = 0;
+        }
+        else if(firstNode.getData().equals(anEntry)){ //first node is the target entry
+            firstNode = firstNode.getNextNode();
+            numOfEntries--;
+        }
+        else {
+            Node curr = firstNode;
+            //until the end of the linked list
+            while (!curr.getNextNode().equals(lastNode)) {
+                if (curr.getNextNode().getData().equals(anEntry)) {
+                    curr.setNextNode(curr.getNextNode().getNextNode());
+                    numOfEntries--;
+                    return;
+                }
+                //continue to next node if the desired entry was not found
+                curr = curr.getNextNode();
+            }
+            if(lastNode.getData().equals(anEntry)){ //the last node being the target is also an edge case
+                curr.setNextNode(null);
+                lastNode = curr;
+                numOfEntries--;
                 return;
             }
-            //continue to next node if the desired entry was not found
-            curr = curr.getNextNode();
+            //throw new IllegalStateException("Entry was not found in the list");
         }
-        throw new IllegalStateException("Entry was not found in the list");
     }
 
     /*
@@ -136,7 +160,7 @@ public class LinkedPriorityQueue<T extends Comparable<? super T>> implements Pri
         }
         throw new IllegalStateException("Entry was not found in the list");
     }
-    */
+     */
 
     /* Copy-Pasted Node Class */
     private class Node

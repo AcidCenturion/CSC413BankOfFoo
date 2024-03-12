@@ -1,9 +1,9 @@
 public class Customer implements CustomerInterface{
     // FIELDS
     private String name;
-    private String email;
     private String username;
-    private String password;
+    private String email;
+    private int id;
     private LinkedPriorityQueue accounts = new LinkedPriorityQueue();
 
     // CONSTRUCTORS
@@ -11,37 +11,37 @@ public class Customer implements CustomerInterface{
     /**
      * Create a new Customer using given credentials.
      */
-    public Customer(String inpName, String inpEmail, String inpUsername, String inpPassword){
+    public Customer(String inpName, String inpUsername, String inpEmail,  int inpId){
         name = inpName;
-        email = inpEmail;
         username = inpUsername;
-        password = inpPassword;
+        email = inpEmail;
+        id = inpId;
     }
 
     // GETTERS AND SETTERS
     public String getName(){
         return name;
     }
-    public String getEmail(){
-        return email;
-    }
     public String getUsername(){
         return username;
     }
-    public String getPassword(){
-        return password;
+    public String getEmail(){
+        return email;
+    }
+    public int getId(){
+        return id;
     }
     public void setName(String newName){
         name = newName;
     }
-    public void setEmail(String newEmail){
-        email = newEmail;
-    }
     public void setUsername(String newUsername){
         username = newUsername;
     }
-    public void setPassword(String newPassword){
-        password = newPassword;
+    public void setEmail(String newEmail){
+        email = newEmail;
+    }
+    public void setId(int newId){
+        id = newId;
     }
 
     // OTHER METHODS
@@ -62,5 +62,13 @@ public class Customer implements CustomerInterface{
             curr = (Account)tempCopy.remove();
         }
         return curr;
+    }
+
+    public String toString(){
+        String temp = "Name: " + name +
+                ", Username: " + username +
+                ", Email: " + email +
+                ", Id: " + id;
+        return temp;
     }
 }

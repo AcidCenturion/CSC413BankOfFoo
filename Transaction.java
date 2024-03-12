@@ -29,7 +29,7 @@ public class Transaction implements TransactionInterface, Comparable<Transaction
      * For comparing Transactions, compare the date-time to each other
      */
     public int compareTo(Transaction other){
-        return dateOfOccurrence.compareTo(getDateOfOccurrence());
+        return dateOfOccurrence.compareTo(other.getDateOfOccurrence());
     }
 
     public void deposit(Account target, double amount){
